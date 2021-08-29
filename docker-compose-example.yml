@@ -1,0 +1,55 @@
+version: "3.9"
+
+services: 
+  
+  auth:
+    build: ./auth
+    depends_on:
+      - mongo
+    environment: 
+      - PORT=
+      - MONGO_URI=
+      - JWT_SECRET=
+
+  users:
+    build: ./users
+    depends_on:
+      - mongo
+    environment: 
+      - PORT=
+      - MONGO_URI=
+      - JWT_SECRET=
+
+  tags:
+    build: ./tags
+    depends_on:
+      - mongo
+    environment: 
+      - PORT=
+      - MONGO_URI=
+      - JWT_SECRET=
+
+  book:
+    build: ./book
+    depends_on:
+      - mongo
+    environment: 
+      - PORT=
+      - MONGO_URI=
+      - JWT_SECRET=
+  
+  mongo:
+    image: mongo:latest
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:8080"
+    volumes: 
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on: 
+      - mongo
+      - auth
+      - users
+      - tags
+      - book
