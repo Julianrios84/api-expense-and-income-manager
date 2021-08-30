@@ -2,18 +2,14 @@ const express = require('express')
 const router = express.Router()
 const checkOrigin = require('../middlewares/origin.middleware')
 const { cacheInit } = require('../middlewares/cache.middleware')
-const { getItems, getItem, createItem, deleteItem, updateItem } = require('../controllers/tags.controller')
+const { getItems, getItem, createItem, deleteItem, updateItem } = require('../controllers/book.controller')
 
 //TODO: Turbo 🐱‍🏍  cache!
-router.get(
-    '/',
-    cacheInit, //TODO: <--- 😨 ¿WTF?
-    getItems
-)
+router.get('/', getItems)
 
 router.get('/:id', getItem)
 
-router.post('/', cacheInit, createItem)
+router.post('/', createItem)
 
 router.put('/:id', updateItem)
 

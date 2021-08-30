@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
+const tags = require("./tags.model");
 
 const bookSchema = new mongoose.Schema(
   {
@@ -6,12 +8,11 @@ const bookSchema = new mongoose.Schema(
       type: String,
     },
     value: {
-      type: mongoose.Schema.Types.Decimal128 
+      type: Schema.Types.Decimal128
     },
     tag: {
       type: Schema.Types.ObjectId,
-      ref: "tags",
-      required: true,
+      ref: tags,
       autopopulate: true
     },
   },
@@ -20,7 +21,6 @@ const bookSchema = new mongoose.Schema(
     versionKey: false,
   }
 );
-
 
 bookSchema.plugin(require("mongoose-autopopulate"));
 module.exports = mongoose.model("book", bookSchema);
